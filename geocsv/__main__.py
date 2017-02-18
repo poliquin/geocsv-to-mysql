@@ -64,12 +64,12 @@ if __name__ == '__main__':
     argp.add_argument('-d', '--delim', default=';', help='GeoCSV delimiter')
     argp.add_argument('-i', '--host', default='127.0.0.1')
     argp.add_argument('-u', '--user', default='root')
-    argp.add_argument('-p', '--password', nargs='?')
+    argp.add_argument('-p', '--password', nargs='?', default=argparse.SUPPRESS)
     argp.add_argument('-t', '--table', help='Table name')
 
     opts = argp.parse_args()
 
-    if opts.password is None:
+    if not hasattr(opts, 'password'):
         from getpass import getpass
         opts.password = getpass(
             'Enter password for {}@{}: '.format(opts.user, opts.host)
