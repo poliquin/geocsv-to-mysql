@@ -68,12 +68,12 @@ def read_csvt(csvt_path):
     return [parse_coltype(i) for i in hdr]
 
 
-def read_geocsv(fpath, csvt_path=None, delim=';'):
+def read_geocsv(fpath, csvt_path=None, delim=';', enc='utf8'):
     """Read a GeoCSV file and schema."""
 
     curlim = csv.field_size_limit(sys.maxsize)
 
-    with open(fpath, 'r') as fh:
+    with open(fpath, 'r', encoding=enc) as fh:
 
         rdr = csv.reader(fh, delimiter=delim)
         hdr = [i.strip().lower() for i in next(rdr)]

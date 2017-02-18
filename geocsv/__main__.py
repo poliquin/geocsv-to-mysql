@@ -47,7 +47,7 @@ def main(opts):
     cur = cnx.cursor()
     cur.execute(create)
 
-    for record in read_geocsv(opts.fpath, opts.csvt_path, opts.delim):
+    for record in read_geocsv(opts.fpath, opts.csvt_path, opts.delim, opts.enc):
         cur.execute(insert, record)
 
     cnx.commit()
@@ -66,6 +66,7 @@ if __name__ == '__main__':
     argp.add_argument('-u', '--user', default='root')
     argp.add_argument('-p', '--password', nargs='?', default=argparse.SUPPRESS)
     argp.add_argument('-t', '--table', help='Table name')
+    argp.add_argument('-e', '--enc', default='utf8', help='CSV file encoding')
 
     opts = argp.parse_args()
 
