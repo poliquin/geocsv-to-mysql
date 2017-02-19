@@ -19,6 +19,12 @@ The above code results in a MySQL table called `output` and the script
 automatically looks for a schema file called `output.csvt`. The table name
 can be changed with the `--table` flag.
 
+Note that it may be necessary to increase the max packet size on the server
+to load large files. This can be done by running the following command on
+the server before running geocsv:
+
+    SET GLOBAL max_allowed_packet=134217728;
+
 This program is intended to work with Python 3.
 
 
