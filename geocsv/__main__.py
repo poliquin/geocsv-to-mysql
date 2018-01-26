@@ -16,6 +16,25 @@ def make_table_name(fpath):
     return tbl
 
 
+def config_ssl(dirpath):
+    """Find SSL certificates for MySQL connection."""
+
+    if dirpath is not None and os.path.isdir(dirpath):
+
+        ca = os.path.join(dirpath, 'ca-cert.pem')
+        cert = os.path.join(dirpath, 'client-cert.pem')
+        key = os.path.join(dirpath, 'client-key.pem')
+
+        return {
+            'ssl_ca': ca if os.path.exists(ca) else None,
+            'ssl_cert': cert if os.path.exists(cert) else None,
+            'ssl_key': key if os.path.exists(key) else None
+        }
+
+    else:
+        return {}
+
+
 def main(opts):
     """Parse and load GeoCSV file."""
 
@@ -41,7 +60,8 @@ def main(opts):
         host=opts.host,
         user=opts.user,
         password=opts.password,
-        database=opts.database
+        database=opts.database,
+        **config_ssl(opts.ssldir)
     )
 
     cur = cnx.cursor()
@@ -66,6 +86,7 @@ if __name__ == '__main__':
     argp.add_argument('-u', '--user', default='root')
     argp.add_argument('-p', '--password', nargs='?', default=argparse.SUPPRESS)
     argp.add_argument('-t', '--table', help='Table name')
+    argp.add_argument('-s', '--ssldir', default='/etc/mysql-ssl', help='Certs')
     argp.add_argument('-e', '--enc', default='utf8', help='CSV file encoding')
 
     opts = argp.parse_args()
