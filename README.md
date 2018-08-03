@@ -25,7 +25,8 @@ the server before running geocsv:
 
     SET GLOBAL max_allowed_packet=134217728;
 
-This program is intended to work with Python 3.
+This program is intended to work with Python 3 and requires the MySQL
+Connector for Python.
 
 
 [geocsv]: https://giswiki.hsr.ch/GeoCSV
